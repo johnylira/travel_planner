@@ -45,11 +45,7 @@ public class LocalController {
     public ResponseEntity<Local> updateLocal(@PathVariable Long id, @RequestBody Local localDetails) {
         return localService.findLocalById(id)
                 .map(existingLocal -> {
-                    // Aqui você pode atualizar as propriedades de existingLocal
-                    // com os valores de localDetails, por exemplo:
                     existingLocal.setNome(localDetails.getNome());
-                    // Continue com outras propriedades conforme necessário
-
                     Local updatedLocal = localService.saveLocal(existingLocal);
                     return new ResponseEntity<>(updatedLocal, HttpStatus.OK);
                 })
