@@ -1,12 +1,19 @@
-import React from 'react';
+// App.js
+import React, { useState } from 'react';
 import LocalList from './components/LocalList';
 import AddLocal from './components/AddLocal';
 
 function App() {
+  const [needsRefresh, setNeedsRefresh] = useState(true);
+
+  const handleLocalAdd = () => {
+    setNeedsRefresh(true);
+  };
+
   return (
     <div className="App">
-      <AddLocal />
-      <LocalList />
+      <AddLocal onLocalAdded={handleLocalAdd} />
+      <LocalList needsRefresh={needsRefresh} setNeedsRefresh={setNeedsRefresh} /> {/* Pass setNeedsRefresh as a prop */}
     </div>
   );
 }
