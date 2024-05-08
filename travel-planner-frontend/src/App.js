@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import LocalList from './components/LocalList';
 import AddLocal from './components/AddLocal';
+import './App.css'; // Importando o CSS
 
 function App() {
   const [needsRefresh, setNeedsRefresh] = useState(true);
