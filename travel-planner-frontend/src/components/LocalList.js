@@ -70,7 +70,7 @@ const LocalList = ({ needsRefresh, setNeedsRefresh }) => {
                     </li>
                 ))}
             </ul>
-            <button onClick={() => setNeedsRefresh(true)}>Atualizar Lista</button>
+            {/* <button onClick={() => setNeedsRefresh(true)}>Atualizar Lista</button> */}
         </div>
     );
 };
