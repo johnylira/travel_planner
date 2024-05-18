@@ -10,7 +10,7 @@ const Reservas = () => {
                 const response = await localService.getAllLocais('/api/locais/reservados'); // Endpoint hipotético
                 setReservas(response.data.filter(({ reserva, empresa })=>{
                     const dono = JSON.parse(localStorage.getItem('user')).email
-                    return reserva==false && empresa === dono
+                    return reserva===false && empresa === dono
                 })); 
             } catch (error) {
                 console.error('Erro ao buscar reservas:', error);
