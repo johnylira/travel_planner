@@ -68,3 +68,43 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+PS C:\Users\sansung\Desktop\travel_planner> java -version
+openjdk version "21.0.3" 2024-04-16 LTS
+OpenJDK Runtime Environment Temurin-21.0.3+9 (build 21.0.3+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.3+9 (build 21.0.3+9-LTS, mixed mode, sharing)
+PS C:\Users\sansung\Desktop\travel_planner> mvn -version
+Apache Maven 3.9.6 (bc0240f3c744dd6b6ec2920b3cd08dcc295161ae)
+Maven home: C:\Program Files\Apache\apache-maven-3.9.6
+Java version: 21.0.3, vendor: Eclipse Adoptium, runtime: C:\Program Files\Eclipse Adoptium\jdk-21.0.3.9-hotspot
+Default locale: pt_BR, platform encoding: UTF-8
+OS name: "windows 11", version: "10.0", arch: "amd64", family: "windows"
+PS C:\Users\sansung\Desktop\travel_planner> npm version
+{
+  npm: '10.8.0',
+  node: '20.13.1',
+  acorn: '8.11.3',
+  ada: '2.7.8',
+  ares: '1.28.1',
+  base64: '0.5.2',
+  brotli: '1.1.0',
+  cjs_module_lexer: '1.2.2',
+  cldr: '45.0',
+  icu: '75.1',
+  llhttp: '8.1.2',
+  modules: '115',
+  napi: '9',
+  nghttp2: '1.61.0',
+  nghttp3: '0.7.0',
+  ngtcp2: '1.1.0',
+  openssl: '3.0.13+quic',
+  simdutf: '5.2.4',
+  tz: '2024a',
+  undici: '6.13.0',
+  unicode: '15.1',
+  uv: '1.46.0',
+  uvwasi: '0.0.20',
+  v8: '11.3.244.8-node.20',
+  zlib: '1.3.0.1-motley-7d77fb7'
+}
