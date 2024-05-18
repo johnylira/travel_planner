@@ -1,17 +1,25 @@
+//components/CadastroPage.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // para redirecionar para login
 import userService from '../services/userService';
 
 const CadastroPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('cliente');
+  const navigate = useNavigate(); // para redirecionar para login
   
   const handleRegister = async (event) => {
     event.preventDefault();
     try {
       const newUser = await userService.register({ email, password, role });
       console.log('Registro bem-sucedido:', newUser);
-      // Implemente a lógica de redirecionamento aqui, se necessário
+      // Redirecione o usuário após o registro bem-sucedido
+      if (newUser) {
+        // Salvar o usuário no localStorage (se necessário)
+        localStorage.setItem('user', JSON.stringify(newUser));
+        navigate('/login');
+      }
     } catch (error) {
       console.error('Erro ao registrar:', error);
     }
