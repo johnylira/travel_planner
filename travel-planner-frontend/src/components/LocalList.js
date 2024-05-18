@@ -10,7 +10,10 @@ const LocalList = ({ needsRefresh, setNeedsRefresh }) => {
         const fetchLocais = async () => {
             try {
                 const response = await localService.getAllLocais();
-                setLocais(response.data);
+                setLocais(response.data.filter(({ empresa })=>{
+                    const dono = JSON.parse(localStorage.getItem('user')).email
+                    return empresa === dono
+                })); 
                 if (needsRefresh) {
                     setNeedsRefresh(false);
                 }
@@ -28,9 +31,9 @@ const LocalList = ({ needsRefresh, setNeedsRefresh }) => {
         setEditNome(local.nome);
     };
 
-    const handleSave = async (id) => {
+    const handleSave = async (local) => {
         try {
-            await localService.updateLocal(id, { nome: editNome });
+            await localService.updateLocal(local.id, { ...local, nome: editNome });
             setEditId(null);
             setEditNome('');
             setNeedsRefresh(true); // Refresh list to show updated data
@@ -57,7 +60,7 @@ const LocalList = ({ needsRefresh, setNeedsRefresh }) => {
                                     value={editNome}
                                     onChange={(e) => setEditNome(e.target.value)}
                                 />
-                                <button onClick={() => handleSave(local.id)}>Salvar</button>
+                                <button onClick={() => handleSave(local)}>Salvar</button>
                                 <button onClick={handleCancel}>Cancelar</button>
                             </div>
                         ) : (

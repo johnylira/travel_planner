@@ -45,10 +45,14 @@ public class LocalController {
     public ResponseEntity<Local> updateLocal(@PathVariable Long id, @RequestBody Local localDetails) {
         return localService.findLocalById(id)
                 .map(existingLocal -> {
+                    // Atualizando campos de acordo com os dados recebidos
                     existingLocal.setNome(localDetails.getNome());
+                    existingLocal.setReserva(localDetails.isReserva());
+                    existingLocal.setClient(localDetails.getClient());  // Supondo que há um campo cliente no modelo Local
                     Local updatedLocal = localService.saveLocal(existingLocal);
                     return new ResponseEntity<>(updatedLocal, HttpStatus.OK);
                 })
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }
+

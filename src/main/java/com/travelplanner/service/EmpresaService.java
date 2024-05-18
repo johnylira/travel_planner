@@ -26,7 +26,11 @@ public class EmpresaService {
         return empresaRepository.save(empresa);
     }
 
-    public void deleteEmpresa(Long id) {
-        empresaRepository.deleteById(id);
+    public boolean deleteEmpresa(Long id) {
+        if (empresaRepository.existsById(id)) {
+            empresaRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

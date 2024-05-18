@@ -1,17 +1,44 @@
-// src/Home.js
-import React, { useState } from 'react';
-import data from '../mock/mockHome'
+import React, { useState, useEffect } from 'react';
+import localService from '../services/localService';
 
 const Home = () => {
+    const [locais, setLocais] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+
+    useEffect(() => {
+        fetchLocais();
+    }, []);
+
+    const fetchLocais = async () => {
+        try {
+            const response = await localService.getAllLocais();
+            setLocais(response.data);
+        } catch (error) {
+            console.error('Erro ao buscar locais:', error);
+        }
+    };
 
     const handleChange = (event) => {
         setSearchTerm(event.target.value);
     };
 
-    const filteredData = data.locaisEmpresas.filter(entry =>
-        entry.local.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        entry.empresa.toLowerCase().includes(searchTerm.toLowerCase())
+    const handleReserve = async (local) => {
+        const updatedLocal = {
+            ...local,
+            reserva: false,
+            client: JSON.parse(localStorage.getItem('user')).email
+        };
+        try {
+            await localService.updateLocal(local.id, updatedLocal);
+            fetchLocais(); // Refresh local data to reflect changes
+        } catch (error) {
+            console.error('Failed to update the local!', error);
+        }
+    };
+
+    const filteredData = locais.filter(local =>
+        local.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        local.empresa.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
@@ -26,7 +53,7 @@ const Home = () => {
             <table>
                 <thead>
                     <tr>
-                        <th>Nome</th>
+                        <th>Local</th>
                         <th>Empresa</th>
                         <th>Reserva</th>
                     </tr>
@@ -34,12 +61,16 @@ const Home = () => {
                 <tbody>
                     {filteredData.map(item => (
                         <tr key={item.id}>
-                            <td>{item.local}</td>
+                            <td>{item.nome}</td>
                             <td>{item.empresa}</td>
                             <td>
-                                <button disabled={!item.disponivel}>
-                                    {item.disponivel ? "Reservar" : "Indisponível"}
-                                </button>
+                                {item.reserva ? (
+                                    <button onClick={() => handleReserve(item)}>
+                                        Reserva disponível
+                                    </button>
+                                ) : (
+                                    "Indisponível"
+                                )}
                             </td>
                         </tr>
                     ))}

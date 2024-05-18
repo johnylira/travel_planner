@@ -1,3 +1,4 @@
+
 package com.travelplanner.model;
 
 import javax.persistence.Entity;

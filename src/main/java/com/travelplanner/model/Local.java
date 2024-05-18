@@ -1,3 +1,4 @@
+
 package com.travelplanner.model;
 
 import javax.persistence.Entity;
@@ -11,10 +12,11 @@ public class Local {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private String endereco;
-    private String descricao;
+    private String empresa;
+    private boolean reserva;
+    private String client;
 
-    // Getters e setters
+    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -31,19 +33,27 @@ public class Local {
         this.nome = nome;
     }
 
-    public String getEndereco() {
-        return endereco;
+    public String getEmpresa() {
+        return empresa;
     }
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
+    public void setEmpresa(String empresa) {
+        this.empresa = empresa;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public boolean isReserva() {
+        return reserva;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setReserva(boolean reserva) {
+        this.reserva = reserva;
+    }
+
+    public String getClient() {
+        return client;
+    }
+
+    public void setClient(String client) {
+        this.client = client;
     }
 }

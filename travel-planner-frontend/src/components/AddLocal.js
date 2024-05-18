@@ -11,7 +11,8 @@ const AddLocal = ({ onLocalAdded }) => { // Pass onLocalAdded prop
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await api.post('/locais', { nome }); // Use async/await for clarity
+      const {email} = JSON.parse(localStorage.getItem('user'));
+      await api.post('/locais', { nome, empresa: email, reserva: true }); // Use async/await for clarity
       console.log('Local adicionado!');
       setNome(''); // Limpar o input após a adição
       if (onLocalAdded) { // Call onLocalAdded if prop is provided
