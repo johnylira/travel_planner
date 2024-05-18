@@ -33,7 +33,7 @@ function App() {
           {userRole === 'admin' && <Link to="/clientes">Clientes</Link>}
           {userRole === 'admin' && <Link to="/empresas">Empresas</Link>}
           {(userRole === 'empresa' || userRole === 'admin') && <Link to="/locais">Locais</Link>}
-          <Link to="/reservas">Reservas</Link>
+          {(userRole === 'empresa' || userRole === 'admin') && <Link to="/reservas">Reservas da Empresa</Link>}
           {(userRole === 'cliente' || userRole === 'empresa' || userRole === 'admin') && <Link to="/minhasReservas">Minhas Reservas</Link>}
           <Link to="/login">Login</Link>
         </nav>
