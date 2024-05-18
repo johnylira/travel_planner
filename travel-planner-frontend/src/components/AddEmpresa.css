@@ -1,0 +1,33 @@
+/* AddEmpresa.css */
+.form-empresa {
+    max-width: 400px; /* Limita a largura do formulário para uma aparência mais focada */
+    margin: 20px auto; /* Centraliza o formulário na página e adiciona um espaçamento vertical */
+    padding: 20px; /* Adiciona um pouco de espaço interno */
+    background-color: #f8f9fa; /* Um fundo claro, mas não branco puro */
+    border-radius: 8px; /* Borda arredondada para o formulário */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra leve para um efeito elevado */
+}
+
+.input-empresa {
+    width: 100%; /* Faz com que o input ocupe toda a largura do formulário */
+    padding: 10px; /* Espaçamento interno para fazer o input mais fácil de interagir */
+    margin-bottom: 15px; /* Adiciona espaço entre os inputs e o botão */
+    border: 1px solid #ccc; /* Borda sutil */
+    border-radius: 4px; /* Borda levemente arredondada para os inputs */
+    box-sizing: border-box; /* Garante que padding e border não aumentem a largura do input */
+}
+
+.button-empresa {
+    width: 100%; /* Faz com que o botão ocupe toda a largura do formulário */
+    padding: 10px 20px; /* Espaçamento interno para tornar o botão mais clicável */
+    background-color: #007bff; /* Cor de fundo azul padrão para botões de ação */
+    color: white; /* Texto do botão em branco para contraste */
+    border: none; /* Remove a borda do botão */
+    border-radius: 4px; /* Borda arredondada para o botão */
+    cursor: pointer; /* Muda o cursor para indicar que o botão é clicável */
+    transition: background-color 0.3s; /* Transição suave para efeito hover */
+}
+
+.button-empresa:hover {
+    background-color: #0056b3; /* Cor mais escura no hover para feedback visual */
+}
