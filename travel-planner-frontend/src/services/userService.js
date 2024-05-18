@@ -1,4 +1,3 @@
-// src/services/userService.js
 import api from './api';
 
 const login = async (email, password) => {
@@ -19,4 +18,6 @@ const register = async (userData) => {
     }
 };
 
-export default { login, register };
+const userService = { login, register }; // Atribuir a uma constante
+
+export default userService; // Exportar a constante

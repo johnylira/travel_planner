@@ -1,6 +1,6 @@
 // App.js
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import AddLocal from './components/AddLocal';
 import AddCliente from './components/ClientAdd';
 import LoginPage from './components/LoginPage';
@@ -35,7 +35,12 @@ function App() {
           {(userRole === 'empresa' || userRole === 'admin') && <Link to="/locais">Locais</Link>}
           {(userRole === 'empresa' || userRole === 'admin') && <Link to="/reservas">Reservas da Empresa</Link>}
           {(userRole === 'cliente' || userRole === 'empresa' || userRole === 'admin') && <Link to="/minhasReservas">Minhas Reservas</Link>}
-          <Link to="/login">Login</Link>
+          {/* <Link to="/login">Login</Link> */}
+          {isLoggedIn ? (
+            <LogoutButton setIsLoggedIn={setIsLoggedIn} setUserRole={setUserRole} />
+          ) : (
+            <Link to="/login">Login</Link>
+          )}
         </nav>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -52,4 +57,18 @@ function App() {
   );
 }
 
+function LogoutButton({ setIsLoggedIn, setUserRole }) {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    setIsLoggedIn(false);
+    setUserRole(null);
+    navigate('/');
+  };
+
+  return (
+    <button onClick={handleLogout} className="logout-button">Logout</button>
+  );
+}
 export default App;
