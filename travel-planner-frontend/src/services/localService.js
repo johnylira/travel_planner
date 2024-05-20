@@ -1,4 +1,3 @@
-// localService.js
 import api from './api';
 
 const localService = {
@@ -16,6 +15,9 @@ const localService = {
     },
     deleteLocal(id) {
         return api.delete(`/locais/${id}`);
+    },
+    getLocaisByClient(clientEmail) {
+        return api.get(`/locais/by-client`, { params: { client: clientEmail } });
     }
 };
 
