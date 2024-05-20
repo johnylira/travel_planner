@@ -1,22 +1,29 @@
-//components/CadastroPage.js
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // para redirecionar para login
+import { useNavigate } from 'react-router-dom';
 import userService from '../services/userService';
 
 const CadastroPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [role, setRole] = useState('cliente');
-  const navigate = useNavigate(); // para redirecionar para login
-  
+  const [userData, setUserData] = useState({
+    nome: '',
+    email: '',
+    password: '',
+    cpf: '',
+    telefone: '',
+    nacionalidade: '',
+    role: 'cliente'
+  });
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setUserData({...userData, [e.target.name]: e.target.value});
+  };
+
   const handleRegister = async (event) => {
     event.preventDefault();
     try {
-      const newUser = await userService.register({ email, password, role });
+      const newUser = await userService.register(userData);
       console.log('Registro bem-sucedido:', newUser);
-      // Redirecione o usuário após o registro bem-sucedido
       if (newUser) {
-        // Salvar o usuário no localStorage (se necessário)
         localStorage.setItem('user', JSON.stringify(newUser));
         navigate('/login');
       }
@@ -25,34 +32,65 @@ const CadastroPage = () => {
     }
   };
 
-  // Função para verificar se a opção "admin" deve ser mostrada
-  const showAdminOption = email.startsWith('admin@');
+  const showAdminOption = userData.email.startsWith('admin@');
 
   return (
     <div className="register-container">
       <form className="register-form" onSubmit={handleRegister}>
         <h2>Cadastro</h2>
+        <label htmlFor="nome">Nome:</label>
+        <input
+          type="text"
+          name="nome"
+          placeholder="Digite seu nome"
+          value={userData.nome}
+          onChange={handleChange}
+        />
         <label htmlFor="email">E-mail:</label>
         <input
           type="email"
-          id="email"
+          name="email"
           placeholder="Digite seu e-mail"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={userData.email}
+          onChange={handleChange}
         />
         <label htmlFor="password">Senha:</label>
         <input
           type="password"
-          id="password"
+          name="password"
           placeholder="Digite sua senha"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={userData.password}
+          onChange={handleChange}
+        />
+        <label htmlFor="cpf">CPF:</label>
+        <input
+          type="text"
+          name="cpf"
+          placeholder="Digite seu CPF"
+          value={userData.cpf}
+          onChange={handleChange}
+        />
+        <label htmlFor="telefone">Telefone:</label>
+        <input
+          type="text"
+          name="telefone"
+          placeholder="Digite seu telefone"
+          value={userData.telefone}
+          onChange={handleChange}
+        />
+        <label htmlFor="nacionalidade">Nacionalidade:</label>
+        <input
+          type="text"
+          name="nacionalidade"
+          placeholder="Digite sua nacionalidade"
+          value={userData.nacionalidade}
+          onChange={handleChange}
         />
         <label htmlFor="role">Tipo de Usuário:</label>
-        <select id="role" value={role} onChange={(e) => setRole(e.target.value)}>
+        <select name="role" value={userData.role} onChange={handleChange}>
           <option value="cliente">Cliente</option>
           <option value="empresa">Empresa</option>
-          {showAdminOption && <option value="admin">Admin</option>} {/* Opção Admin aparece condicionalmente */}
+          {showAdminOption && <option value="admin">Admin</option>}
         </select>
         <button type="submit">Cadastrar</button>
       </form>
