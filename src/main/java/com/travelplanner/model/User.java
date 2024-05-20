@@ -12,6 +12,10 @@ public class User {
     private String email;
     private String password;
     private String role; // "cliente", "empresa", "administrador"
+    private String nome;
+    private String cpf;
+    private String telefone;
+    private String nacionalidade;
 
     // Getters and Setters
     public Long getId() {
@@ -44,5 +48,38 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    // Getters and setters para os novos campos
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getNacionalidade() {
+        return nacionalidade;
+    }
+
+    public void setNacionalidade(String nacionalidade) {
+        this.nacionalidade = nacionalidade;
     }
 }
