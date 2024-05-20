@@ -30,4 +30,8 @@ public class LocalService {
     public void deleteLocal(Long id) {
         localRepository.deleteById(id);
     }
+
+    public List<Local> findLocaisByClient(String client) {
+        return localRepository.findByClient(client);
+    }
 }

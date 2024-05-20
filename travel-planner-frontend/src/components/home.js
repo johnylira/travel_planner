@@ -81,7 +81,7 @@ const Home = () => {
                             <td>{item.descricao}</td>
                             <td>
                                 {item.reserva ? (
-                                    <button onClick={() => handleReserve(item)} disabled={!isLoggedIn}>
+                                    <button onClick={() => handleReserve(item)}>
                                         Reserva disponível
                                     </button>
                                 ) : (

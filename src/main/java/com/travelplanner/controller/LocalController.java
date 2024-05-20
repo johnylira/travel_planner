@@ -54,5 +54,10 @@ public class LocalController {
                 })
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+    @GetMapping("/by-client")
+    public List<Local> getLocaisByClient(@RequestParam String client) {
+        return localService.findLocaisByClient(client);
+    }
 }
 

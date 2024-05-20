@@ -7,7 +7,7 @@ const MinhasReservas = () => {
     useEffect(() => {
         const fetchReservas = async () => {
             try {
-                const response = await localService.getAllLocais('/api/locais/reservados'); // Endpoint hipotético
+                const response = await localService.getAllLocais(); // Endpoint hipotético
                 setReservas(response.data.filter(({ client })=>{
                     const dono = JSON.parse(localStorage.getItem('user')).email
                     return client === dono
