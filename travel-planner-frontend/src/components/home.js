@@ -4,9 +4,11 @@ import localService from '../services/localService';
 const Home = () => {
     const [locais, setLocais] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
         fetchLocais();
+        checkLoginStatus();
     }, []);
 
     const fetchLocais = async () => {
@@ -18,11 +20,20 @@ const Home = () => {
         }
     };
 
+    const checkLoginStatus = () => {
+        const user = localStorage.getItem('user');
+        setIsLoggedIn(!!user);
+    };
+
     const handleChange = (event) => {
         setSearchTerm(event.target.value);
     };
 
     const handleReserve = async (local) => {
+        if (!isLoggedIn) {
+            alert('Você precisa estar logado para fazer uma reserva.');
+            return;
+        }
         const updatedLocal = {
             ...local,
             reserva: false,
@@ -37,8 +48,7 @@ const Home = () => {
     };
 
     const filteredData = locais.filter(local =>
-        local.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        local.empresa.toLowerCase().includes(searchTerm.toLowerCase())
+        local.nome.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
@@ -54,7 +64,10 @@ const Home = () => {
                 <thead>
                     <tr>
                         <th>Local</th>
-                        <th>Empresa</th>
+                        <th>Endereço</th>
+                        <th>Preço</th>
+                        <th>Horário de Funcionamento</th>
+                        <th>Descrição</th>
                         <th>Reserva</th>
                     </tr>
                 </thead>
@@ -62,10 +75,13 @@ const Home = () => {
                     {filteredData.map(item => (
                         <tr key={item.id}>
                             <td>{item.nome}</td>
-                            <td>{item.empresa}</td>
+                            <td>{item.endereco}</td>
+                            <td>{`R$ ${item.preco.toFixed(2)}`}</td>
+                            <td>{item.horarioFuncionamento}</td>
+                            <td>{item.descricao}</td>
                             <td>
                                 {item.reserva ? (
-                                    <button onClick={() => handleReserve(item)}>
+                                    <button onClick={() => handleReserve(item)} disabled={!isLoggedIn}>
                                         Reserva disponível
                                     </button>
                                 ) : (
