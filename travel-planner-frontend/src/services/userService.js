@@ -18,6 +18,37 @@ const register = async (userData) => {
     }
 };
 
-const userService = { login, register }; // Atribuir a uma constante
+// Novo método para buscar todos os usuários
+const getAllUsers = async () => {
+    try {
+        const response = await api.get('/api/users');
+        return response.data; // Retorna todos os usuários
+    } catch (error) {
+        throw error;
+    }
+};
 
-export default userService; // Exportar a constante
+// Novo método para buscar um usuário por email
+const getUserByEmail = async (email) => {
+    try {
+        const response = await api.get('/api/users/by-email', { params: { email } });
+        return response.data; // Retorna o usuário especificado
+    } catch (error) {
+        throw error;
+    }
+};
+
+// Exemplo de método updateCliente em clientService
+const updateCliente = async (id, data) => {
+    try {
+        const response = await api.put(`/api/clients/${id}`, data);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+// Exporta todas as funções como um objeto
+const userService = { login, register, getAllUsers, getUserByEmail, updateCliente };
+
+export default userService;

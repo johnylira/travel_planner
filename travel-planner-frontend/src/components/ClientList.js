@@ -1,42 +1,35 @@
-// components/ClientList.js
 import React, { useEffect, useState } from 'react';
-import clienteService from '../services/clientService'
+import userService from '../services/userService';
 
-const ClientList = ({ needsRefresh, setNeedsRefresh }) => {
+const ClientList = () => {
     const [clientes, setClientes] = useState([]);
     const [editId, setEditId] = useState(null);
-    const [editNome, setEditNome] = useState('');
-    const [editEmail, setEditEmail] = useState(''); // Para edição de email também
+    const [editRole, setEditRole] = useState('');
 
     useEffect(() => {
-        const fetchClientes = async () => {
-            try {
-                const response = await clienteService.getAllClientes();
-                setClientes(response.data);
-                if (needsRefresh) {
-                    setNeedsRefresh(false);
-                }
-            } catch (error) {
-                console.error('Erro ao buscar clientes:', error);
-            }
-        };
-
         fetchClientes();
-    }, [needsRefresh, setNeedsRefresh]);
+    }, []);
+
+    const fetchClientes = async () => {
+        try {
+            const response = await userService.getAllUsers();
+            setClientes(response);
+        } catch (error) {
+            console.error('Erro ao buscar clientes:', error);
+        }
+    };
 
     const handleEdit = (cliente) => {
         setEditId(cliente.id);
-        setEditNome(cliente.nome);
-        setEditEmail(cliente.email); // Manipulando email também
+        setEditRole(cliente.role);
     };
 
-    const handleSave = async () => {
+    const handleSave = async (id) => {
         try {
-            await clienteService.updateCliente(editId, { nome: editNome, email: editEmail });
+            console.log('oioi')
+            await userService.updateCliente(id, { role: editRole });
             setEditId(null);
-            setEditNome('');
-            setEditEmail('');
-            setNeedsRefresh(true);
+            fetchClientes(); // Refresh the list after saving
         } catch (error) {
             console.error('Erro ao salvar o cliente:', error);
         }
@@ -44,44 +37,52 @@ const ClientList = ({ needsRefresh, setNeedsRefresh }) => {
 
     const handleCancel = () => {
         setEditId(null);
-        setEditNome('');
-        setEditEmail('');
     };
 
     return (
         <div>
             <h1>Clientes</h1>
-            <ul>
-                {clientes.map(cliente => (
-                    <li key={cliente.id}>
-                        {editId === cliente.id ? (
-                            <div>
-                                <input
-                                    type="text"
-                                    value={editNome}
-                                    onChange={(e) => setEditNome(e.target.value)}
-                                />
-                                <input
-                                    type="email"
-                                    value={editEmail}
-                                    onChange={(e) => setEditEmail(e.target.value)}
-                                />
-                                <button onClick={handleSave}>Salvar</button>
-                                <button onClick={handleCancel}>Cancelar</button>
-                            </div>
-                        ) : (
-                            <div>
-                                {cliente.nome} ({cliente.email})
-                                <button onClick={() => handleEdit(cliente)}>Editar</button>
-                                <button onClick={() => clienteService.deleteCliente(cliente.id).then(() => setNeedsRefresh(true))}>Remover</button>
-                            </div>
-                        )}
-                    </li>
-                ))}
-            </ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        {/* <th>Ações</th> */}
+                    </tr>
+                </thead>
+                <tbody>
+                    {clientes.map(cliente => (
+                        <tr key={cliente.id}>
+                            <td>{cliente.id}</td>
+                            <td>{cliente.email}</td>
+                            <td>
+                                {editId === cliente.id ? (
+                                    <select value={editRole} onChange={(e) => setEditRole(e.target.value)}>
+                                        <option value="cliente">Cliente</option>
+                                        <option value="empresa">Empresa</option>
+                                        <option value="admin">Admin</option>
+                                    </select>
+                                ) : (
+                                    cliente.role
+                                )}
+                            </td>
+                            {/* <td>
+                                {editId === cliente.id ? (
+                                    <>
+                                        <button onClick={() => handleSave(cliente.id)}>Salvar</button>
+                                        <button onClick={handleCancel}>Cancelar</button>
+                                    </>
+                                ) : (
+                                    <button onClick={() => handleEdit(cliente)}>Editar</button>
+                                )}
+                            </td> */}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 };
 
 export default ClientList;
-
